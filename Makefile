@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/04/13 17:14:30 by jhamon           ###   ########.fr        #
+#    Updated: 2019/04/13 18:19:38 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ $(NAME) : $(OBJ)
 	@$(CC) -o $@ $(SRC) $(INC) $(LIB) $(FLAG)
 	@make auteur
 	$(call FOK,$@)
+	./$(NAME)
 
 $(OBJ_PATH)%.o : $(SRC_PATH)%.c
 	@mkdir -p `dirname $@`

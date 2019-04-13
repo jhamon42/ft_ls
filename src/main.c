@@ -1,7 +1,22 @@
-#include <stdio.h>
-#include "../libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/13 17:50:40 by jhamon            #+#    #+#             */
+/*   Updated: 2019/04/13 18:19:41 by jhamon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
 
 int main() {
+  DIR *fd;
+  fd = opendir(".");
+  printf("%s\n",fd);
   ft_printf("{red}Hello World\n");
+  closedir(fd);
   return 0;
 }

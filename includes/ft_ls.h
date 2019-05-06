@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:47:47 by jhamon            #+#    #+#             */
-/*   Updated: 2019/04/25 15:34:45 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/04/26 16:18:05 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define FT_LS_H
 
 # define CH(X) printf("%50c-- check %d --\n", ' ', X);
+# define A 2
+# define L 4
+# define T 1
+# define R 16
+# define MR 8
+
 
 #include <unistd.h>
 #include <stdio.h>
@@ -35,6 +41,7 @@ typedef struct       s_file {
   char*              user_passwd;
   char*              user_real_name;
   char*              permissions_type;
+  long int           time;
   long int           uid;
   long int           gid;
   long int           user_id;
@@ -64,5 +71,6 @@ typedef struct        s_state_ls {
 }                     t_state_ls;
 
 void            parse_option(const char* flags, t_state_ls *ls);
-void            recursive_while(t_state_ls *ls, int iterate);
+void            recursive_while(t_state_ls *ls, int iterate, char **dir_files);
+void            fild_tree(t_bin_tree tree, char **dir_files, char flags);
 #endif

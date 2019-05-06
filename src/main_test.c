@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:50:40 by jhamon            #+#    #+#             */
-/*   Updated: 2019/04/16 15:54:19 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/06 16:33:11 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int ft_reverce(DIR * dir)
   struct dirent *dent;
   if ((dent=readdir(dir))!=NULL)
   {
-    ft_reverce(dir);
     printf("%s\n",dent->d_name);
+    ft_reverce(dir);
   }
   return 1;
 }
@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
   // struct dirent *dent;
   const clock_t t = clock();
   DIR *dir;
-  int t_symlink();
   int cc;
   char buf[BUFSIZ];
   char buffer[50];
@@ -39,7 +38,7 @@ int main(int argc, char *argv[]) {
     argv[1] = ".";
   }
 
-  if (stat(argv[1], &sb) == -1) {
+  if (lstat(argv[1], &sb) == -1) {
     perror("stat");
     exit(EXIT_SUCCESS);
   }
@@ -58,18 +57,17 @@ int main(int argc, char *argv[]) {
   }
   buf[cc] = '\0';
 
-
-  printf("%s\n", buf);
+  printf("%s\n", buffer);
   printf("Type de fichier :                ");
   switch (sb.st_mode & S_IFMT) {
-  case S_IFBLK:  printf("périphérique de bloc\n");      break;
-  case S_IFCHR:  printf("périphérique de caractère\n"); break;
-  case S_IFDIR:  printf("répertoire\n");                break;
-  case S_IFIFO:  printf("FIFO/tube\n");                 break;
-  case S_IFLNK:  printf("lien symbolique\n");           break;
-  case S_IFREG:  printf("fichier ordinaire\n");         break;
-  case S_IFSOCK: printf("socket\n");                    break;
-  default:       printf("inconnu ?\n");                 break;
+    case S_IFBLK:  printf("périphérique de bloc\n");      break;
+    case S_IFCHR:  printf("périphérique de caractère\n"); break;
+    case S_IFDIR:  printf("répertoire\n");                break;
+    case S_IFIFO:  printf("FIFO/tube\n");                 break;
+    case S_IFLNK:  printf("lien symbolique\n");           break;
+    case S_IFREG:  printf("fichier ordinaire\n");         break;
+    case S_IFSOCK: printf("socket\n");                    break;
+    default:       printf("inconnu ?\n");                 break;
   }
   printf("Numéro d'inœud :                   %ld\n",               (long) sb.st_ino);
   printf("Mode :                             %lo (octal)\n",       (unsigned long) sb.st_mode);

@@ -6,11 +6,13 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:50:40 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/06 16:34:11 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/11 16:27:49 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include <grp.h>
+#include <sys/types.h>
 
 
 int ft_reverce(DIR * dir)
@@ -27,6 +29,8 @@ int ft_reverce(DIR * dir)
 int main(int argc, char *argv[]) {
   struct stat sb;
   struct passwd *pwd;
+  struct group *g_pwd;
+  char date_cp[13];
   // struct dirent *dent;
   const clock_t t = clock();
   DIR *dir;
@@ -47,7 +51,10 @@ int main(int argc, char *argv[]) {
     perror("passwd");
     exit(EXIT_SUCCESS);
   }
-
+  if ((g_pwd = getgrgid(sb.st_gid)) == NULL) {
+    perror("passwd");
+    exit(EXIT_SUCCESS);
+  }
 
   strcpy(buffer, argv[1]);
   dir = opendir(buffer);
@@ -88,9 +95,9 @@ int main(int argc, char *argv[]) {
   printf("Taille de bloc d’E/S :             %ld octets\n",        (long) sb.st_blksize);
   printf("Taille du fichier :                %lld octets\n",       (long long) sb.st_size);
   printf("Blocs alloués :                    %lld\n",              (long long) sb.st_blocks);
-  printf("Dernier changement d’état :        %s\n",                ctime(&sb.st_ctime));
-  printf("Dernier accès au fichier :         %s\n",                ctime(&sb.st_atime));
-  printf("Dernière modification du fichier:  %s\n",                ctime(&sb.st_mtime));
+  ft_strncpy(date_cp, ctime(&sb.st_mtime)+4, 12);
+  printf("Dernière modification du fichier:  %s\n",                date_cp);
+  printf("name_group:                        %s\n",                g_pwd->gr_name);
   printf("Nom d'utilisateur:                 %s\n",                pwd->pw_name);
   printf("Mot de passe                       %s\n",                pwd->pw_passwd);
   printf("ID de l'utilisateur                %ld\n",               (long) pwd->pw_uid);

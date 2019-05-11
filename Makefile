@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/05/06 15:11:48 by jhamon           ###   ########.fr        #
+#    Updated: 2019/05/07 18:19:39 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_PATH = src/
 OBJ_PATH  = obj/
 
 #srcs
-SRC_PS = main_test.c #ft_parse_option.c ft_recursive_while.c
+SRC_PS = main.c ft_parse_option.c ft_recursive_while.c ft_fild_tree.c
 
 SRC = $(addprefix $(SRC_PATH), $(SRC_PS))
 OBJ = $(addprefix $(OBJ_PATH), $(SRC_PS:.c=.o))

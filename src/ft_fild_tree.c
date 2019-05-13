@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/13 16:28:59 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/13 16:41:44 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_file	static	*create_data_file(char *dir_file)
 	return (data);
 }
 
-t_tree	static	*add_leaf(t_file *new_data)
+static t_tree	*add_leaf(t_file *new_data)
 {
 	t_tree *new_branch;
 
@@ -51,7 +51,25 @@ t_tree	static	*add_leaf(t_file *new_data)
 	return (new_branch);
 }
 
-void			sort_time(t_tree *tmp, t_file *new_data)
+static void		sort_name(t_tree *tmp, t_file *new_data)
+{
+	if (ft_strcmp(tmp->data->name, new_data->name) > 0)
+	{
+		if (tmp->right != NULL)
+			tmp = tmp->right;
+		else
+			tmp->right = add_leaf(new_data);
+	}
+	else
+	{
+		if (tmp->left != NULL)
+			tmp = tmp->left;
+		else
+			tmp->left = add_leaf(new_data);
+	}
+}
+
+static void		sort_time(t_tree *tmp, t_file *new_data)
 {
 	if (tmp->data->time > new_data->time)
 	{
@@ -84,6 +102,8 @@ void			fild_tree(t_tree *tree, char **dir_files, char flags)
 		{
 			if (flags & T)
 				sort_time(tmp, new_data);
+			else
+				sort_name(tmp, new_data);
 		}
 		i++;
 	}

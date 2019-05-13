@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:47:47 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/11 17:42:21 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/13 15:16:43 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,10 @@ typedef struct		s_state_ls {
 
 void				parse_option(const char *flags, t_state_ls *ls);
 void				recursive_while(char flags, int iterate, char **dir_files);
-void				fild_tree(t_bin_tree *tree, char **dir_files, char flags);
+void				fild_tree(t_tree *tree, char **dir_files, char flags);
+void				print_l_mode(t_file *data);
+void				exit_custum(char *error, int type);
+void				init_state_ls(t_state_ls *ls);
+void				cp_data(struct stat *sb, struct passwd *pwd,
+						struct group *grp, t_file *data);
 #endif

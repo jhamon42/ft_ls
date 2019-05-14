@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:54:45 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/13 14:55:06 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 15:12:06 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 void	exit_custum(char *error, int type)
 {
 	perror(error);
+	// oblie pas de tous free
 	exit(type);
 }

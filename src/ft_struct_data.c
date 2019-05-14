@@ -6,13 +6,13 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:57:27 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/13 14:58:07 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 15:04:05 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void				cp_data(
+static void		cp_data(
 	struct stat *sb,
 	struct passwd *pwd,
 	struct group *grp,
@@ -42,4 +42,31 @@ void				cp_data(
 	data->major = major(sb->st_rdev);
 	data->minor = minor(sb->st_rdev);
 	data->perm_type[10] = '\0';
+}
+
+t_file			*create_data_file(char *dir_file)
+{
+	t_file			*data;
+	struct stat		sb;
+	struct passwd	*pwd;
+	struct group	*grp;
+	int				i;
+
+	i = 0;
+	if (!(data = malloc(sizeof(t_file))))
+		exit_custum("malloc", EXIT_ERROR);
+	ft_bzero(data, sizeof(t_file));
+	if (lstat(dir_file, &sb) == -1)
+		exit_custum("stat", EXIT_ERROR);
+	if ((pwd = getpwuid(sb.st_uid)) == NULL)
+		exit_custum("passwd", EXIT_ERROR);
+	if ((grp = getgrgid(sb.st_gid)) == NULL)
+		exit_custum("group", EXIT_ERROR);
+	if (S_ISLNK(sb.st_mode)
+		&& (i = readlink(dir_file, data->link_name, BUFSIZ)) == -1)
+		exit_custum("readlink", EXIT_ERROR);
+	cp_data(&sb, pwd, grp, data);
+	data->link_name[i] = '\0';
+	data->name = dir_file;
+	return (data);
 }

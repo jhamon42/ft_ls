@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:44:08 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/13 16:54:34 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 12:23:18 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,21 @@ void	print_l_mode(t_file *data)
 	if (data->perm_type[0] == 'l')
 		ft_printf(" -> {purple}%s{eoc}", data->link_name);
 	ft_printf("\n");
+}
+
+void	print_arb(t_tree *st)
+{
+	if (st->left == NULL)
+	{
+		print_l_mode(st->data);
+		if (st->right != NULL)
+			print_arb(st->right);
+	}
+	else
+	{
+		print_arb(st->left);
+		print_l_mode(st->data);
+		if (st->right != NULL)
+			print_arb(st->right);
+	}
 }

@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 16:45:22 by jhamon            #+#    #+#              #
-#    Updated: 2018/03/08 20:21:09 by jhamon           ###   ########.fr        #
+#    Updated: 2019/05/14 15:18:14 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,5 +91,15 @@ fclean : clean
 
 re : fclean all
 
+debug :
+	@make DB=1
+	@make -C libft DB=1
 
-.PHONY : all clean fclean re force
+auteur :
+	@touch $@ && echo $(AUTEUR) > $@
+	$(call BULSHIT,$(AUTEUR))
+
+norme :
+	@norminette $(SRC)
+
+.PHONY : all clean fclean re force norme auteur debug

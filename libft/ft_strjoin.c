@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 08:49:55 by jhamon            #+#    #+#             */
-/*   Updated: 2018/02/20 12:25:32 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 15:19:07 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	while (++i < j)
 		new_str[i] = s1[i];
-	j = -1; 
+	j = -1;
 	while ((++j + i) < (len))
 		new_str[i + j] = s2[j];
 	new_str[i + j] = '\0';

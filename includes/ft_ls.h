@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:47:47 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/14 15:02:18 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 16:44:31 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ typedef struct		s_state_ls {
 void				parse_option(const char *flags, t_state_ls *ls);
 void				recursive_while(char flags, char **dir_files);
 void				fild_tree(t_tree *tree, char **dir_files, char flags);
-void				print_l_mode(t_file *data);
 void				exit_custum(char *error, int type);
 void				init_state_ls(t_state_ls *ls);
-void				print_arb(t_tree *st);
+void				print_arb(t_tree *st, char flags, short int no_dir);
 t_file				*create_data_file(char *dir_file);
 #endif

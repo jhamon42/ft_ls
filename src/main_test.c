@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:50:40 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/13 15:27:39 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 16:04:30 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int		ft_reverce(DIR *dir)
 
 int		main(int argc, char *argv[])
 {
-	DIR				*dir;
-	char			buffer[50];
+	DIR		*dir;
+	char	buffer[50];
 
 	if (argc != 2)
 	{

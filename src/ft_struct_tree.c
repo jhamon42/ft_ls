@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fild_tree.c                                     :+:      :+:    :+:   */
+/*   ft_struct_tree.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/14 15:02:49 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/05/14 16:58:42 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ void			fild_tree(t_tree *tree, char **dir_files, char flags)
 		sort_tree(tmp, new_data, flags);
 		i++;
 	}
-	print_arb(tree);
+	// print_arb(tree, flags, 0);
 }

@@ -6,11 +6,11 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/14 16:58:42 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/04 16:32:15 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 static t_tree	*add_leaf(t_file *new_data)
 {

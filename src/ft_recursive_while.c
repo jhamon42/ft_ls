@@ -6,11 +6,11 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 15:18:24 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/02 17:05:24 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/04 16:58:01 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	recursive_while(char flags, char **dir_files)
 {
@@ -23,5 +23,8 @@ void	recursive_while(char flags, char **dir_files)
 	printf(" -> %s\n", dir_files[0]);
 	tree->data = create_data_file(dir_files[0]);
 	fild_tree(tree, dir_files + 1, flags);
-	print_arb(tree, flags, 0);
+	print_arb(tree, flags);
+	if (flags & GR)
+	{
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:47:47 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/14 16:44:31 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/04 16:08:49 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void				recursive_while(char flags, char **dir_files);
 void				fild_tree(t_tree *tree, char **dir_files, char flags);
 void				exit_custum(char *error, int type);
 void				init_state_ls(t_state_ls *ls);
-void				print_arb(t_tree *st, char flags, short int no_dir);
+void				print_arb(t_tree *st, char flags);
 t_file				*create_data_file(char *dir_file);
+void				simple_print(t_file *data, char flags);
+void				multi_print(t_tree *tree, char flags);
 #endif

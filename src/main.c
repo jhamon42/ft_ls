@@ -6,11 +6,11 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 16:56:01 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/02 14:46:18 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/04 16:09:38 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 int		main(int argc, char *argv[])
 {
@@ -28,7 +28,6 @@ int		main(int argc, char *argv[])
 		parse_option(argv[i++] + 1, &ls);
 	tree->data = create_data_file(argv[i++]);
 	argc > 2 ? fild_tree(tree, argv + i, ls.flags) : 0;
-	print_arb(tree, ls.flags, 1);
-	argc - i ? recursive_while(ls.flags, argv + i) : 0;
+	argc > 2 ? multi_print(tree, ls.flags) : simple_print(tree->data, ls.flags);
 	return (0);
 }

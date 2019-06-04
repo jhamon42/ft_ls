@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/05/14 15:20:10 by jhamon           ###   ########.fr        #
+#    Updated: 2019/06/04 16:21:59 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_PATH = src/
 OBJ_PATH  = obj/
 
 #srcs
-SRC_PS = main.c ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
+SRC_PS = main_test.c ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
 		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c
 
 SRC = $(addprefix $(SRC_PATH), $(SRC_PS))

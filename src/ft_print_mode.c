@@ -6,11 +6,11 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:44:08 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/14 16:58:26 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/04 16:58:43 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	print_l_mode(t_file *data)
 {
@@ -32,23 +32,38 @@ void	print_l_mode(t_file *data)
 	ft_printf("\n");
 }
 
-void	print_arb(t_tree *tree, char flags, short int no_dir)
+void	print_arb(t_tree *tree, char flags)
 {
 	if (tree->left == NULL)
 	{
-		if (no_dir == 0 || tree->data->perm_type[0] != 'd')
-			flags & L ? print_l_mode(tree->data)
+		flags & L ? print_l_mode(tree->data)
 			: ft_printf("%s\n", tree->data->name);
 		if (tree->right != NULL)
-			print_arb(tree->right, flags, no_dir);
+			print_arb(tree->right, flags);
 	}
 	else
 	{
-		print_arb(tree->left, flags, no_dir);
-		if (no_dir == 0 || tree->data->perm_type[0] != 'd')
-			flags & L ? print_l_mode(tree->data)
+		print_arb(tree->left, flags);
+		flags & L ? print_l_mode(tree->data)
 			: ft_printf("%s\n", tree->data->name);
 		if (tree->right != NULL)
-			print_arb(tree->right, flags, no_dir);
+			print_arb(tree->right, flags);
 	}
+}
+
+void	multi_print(t_tree *tree, char flags)
+{
+	return;
+}
+
+void is_dir(t_file *data, char flags)
+{}
+
+void	simple_print(t_file *data, char flags)
+{
+	if (data->perm_type[0] != 'd')
+		flags & L ? print_l_mode(data)
+			: ft_printf("%s\n", data->name);
+	else
+		is_dir(data, flags);
 }

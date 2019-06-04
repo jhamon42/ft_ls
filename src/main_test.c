@@ -6,11 +6,11 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 17:50:40 by jhamon            #+#    #+#             */
-/*   Updated: 2019/05/14 16:04:30 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/04 16:24:15 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../includes/ft_ls.h"
 #include <grp.h>
 #include <sys/types.h>
 #define SYS_ERR -1
@@ -21,8 +21,8 @@ int		ft_reverce(DIR *dir)
 
 	if ((dent = readdir(dir)) != NULL)
 	{
-		printf("%s\n", dent->d_name);
 		ft_reverce(dir);
+		printf("%s\n", dent->d_name);
 	}
 	return (1);
 }
@@ -30,14 +30,12 @@ int		ft_reverce(DIR *dir)
 int		main(int argc, char *argv[])
 {
 	DIR		*dir;
-	char	buffer[50];
 
 	if (argc != 2)
 	{
 		argv[1] = ".";
 	}
-	strcpy(buffer, argv[1]);
-	dir = opendir(buffer);
+	dir = opendir(argv[1]);
 	if (dir != NULL)
 	{
 		ft_reverce(dir);

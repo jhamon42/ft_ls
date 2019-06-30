@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/04 16:32:15 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/30 18:03:18 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void		sort_tree(t_tree *tmp, t_file *new_data, char flags)
 	}
 }
 
-void			fild_tree(t_tree *tree, char **dir_files, char flags)
+void			fild_multi_tree(t_tree *tree, char **dir_files, char flags)
 {
 	int			i;
 	t_tree		*tmp;
@@ -63,5 +63,18 @@ void			fild_tree(t_tree *tree, char **dir_files, char flags)
 		sort_tree(tmp, new_data, flags);
 		i++;
 	}
-	// print_arb(tree, flags, 0);
+}
+
+void			fild_tree(t_tree *tree, DIR *dir_files, char flags, char *path)
+{
+	struct dirent	*dent;
+	t_file			*new_data;
+
+	if ((dent = readdir(dir_files)) != NULL)
+		tree->data = create_data_file(ft_strjoin(path, dent->d_name));
+	while ((dent = readdir(dir_files)) != NULL)
+	{
+		new_data = create_data_file(ft_strjoin(path, dent->d_name));
+		sort_tree(tree, new_data, flags);
+	}
 }

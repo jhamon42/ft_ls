@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:44:08 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/04 16:58:43 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/30 16:20:09 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,33 @@ void	print_arb(t_tree *tree, char flags)
 {
 	if (tree->left == NULL)
 	{
-		flags & L ? print_l_mode(tree->data)
-			: ft_printf("%s\n", tree->data->name);
+		if (tree->data->name[0] != '.' || A & flags)
+		{
+			flags & L ? print_l_mode(tree->data)
+				: ft_printf("%s\n", tree->data->name);
+		}
 		if (tree->right != NULL)
 			print_arb(tree->right, flags);
 	}
 	else
 	{
 		print_arb(tree->left, flags);
-		flags & L ? print_l_mode(tree->data)
-			: ft_printf("%s\n", tree->data->name);
+		if (tree->data->name[0] != '.' || A & flags)
+		{
+			flags & L ? print_l_mode(tree->data)
+				: ft_printf("%s\n", tree->data->name);
+		}
 		if (tree->right != NULL)
 			print_arb(tree->right, flags);
 	}
 }
 
-void	multi_print(t_tree *tree, char flags)
+void	multi_print(char **files, char flags)
 {
 	return;
 }
 
 void is_dir(t_file *data, char flags)
-{}
-
-void	simple_print(t_file *data, char flags)
 {
-	if (data->perm_type[0] != 'd')
-		flags & L ? print_l_mode(data)
-			: ft_printf("%s\n", data->name);
-	else
-		is_dir(data, flags);
+
 }

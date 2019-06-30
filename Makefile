@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/06/04 16:21:59 by jhamon           ###   ########.fr        #
+#    Updated: 2019/06/27 16:22:35 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,18 @@ SRC_PATH = src/
 OBJ_PATH  = obj/
 
 #srcs
-SRC_PS = main_test.c ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
-		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c
+SRC_PS = ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
+		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c ft_just_one.c
 
-SRC = $(addprefix $(SRC_PATH), $(SRC_PS))
-OBJ = $(addprefix $(OBJ_PATH), $(SRC_PS:.c=.o))
+MAIN = main.c
+
+TEST = main_test.c
+
+SRC_MAIN = $(addprefix $(SRC_PATH), $(SRC_PS) $(MAIN))
+OBJ_MAIN = $(addprefix $(OBJ_PATH), $(SRC_PS:.c=.o) $(MAIN:.c=.o))
+
+SRC_TEST = $(addprefix $(SRC_PATH), $(SRC_PS) $(TEST))
+OBJ_TEST = $(addprefix $(OBJ_PATH), $(SRC_PS:.c=.o) $(TEST:.c=.o))
 
 LIB = -L libft/ -lft
 
@@ -94,12 +101,12 @@ all : $(NAME)
 	@make -C libft
 	@:
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ_MAIN)
 	@make -C libft
-	@$(CC) -o $@ $(SRC) $(INC) $(LIB) $(FLAG)
+	@$(CC) -o $@ $(SRC_MAIN) $(INC) $(LIB) $(FLAG)
 	@make auteur
 	$(call FOK,$@)
-	@make norme
+	# @make norme
 
 $(OBJ_PATH)%.o : $(SRC_PATH)%.c
 	@mkdir -p `dirname $@`
@@ -109,6 +116,11 @@ else
 	@$(CC) -c $(FLAGS) $(INC) $< -o $@
 endif
 	$(call OK,$*)
+
+test : $(OBJ_TEST)
+	@make -C libft
+	@$(CC) -o $(NAME) $(SRC_TEST) $(INC) $(LIB) $(FLAG)
+	$(call FOK,$@)
 
 clean :
 	@make -C libft clean
@@ -135,4 +147,4 @@ norme :
 	@norminette $(SRC)
 	@norminette includes
 
-.PHONY : all clean fclean re debug auteur norme
+.PHONY : all clean fclean re debug auteur norme test

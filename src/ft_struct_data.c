@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:57:27 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/04 16:32:34 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/06/30 18:00:47 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ t_file			*create_data_file(char *dir_file)
 		exit_custum("readlink", EXIT_ERROR);
 	cp_data(&sb, pwd, grp, data);
 	data->link_name[i] = '\0';
-	data->name = dir_file;
+	data->name = ft_strrchr(dir_file, '/');
+	data->name = data->name ? data->name + 1 : dir_file;
+	data->path = ft_strjoin(dir_file, "/");
 	return (data);
 }

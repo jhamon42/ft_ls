@@ -6,13 +6,13 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/30 18:03:18 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/02 13:02:10 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-static t_tree	*add_leaf(t_file *new_data)
+static	t_tree	*add_leaf(t_file *new_data)
 {
 	t_tree *new_branch;
 
@@ -24,7 +24,7 @@ static t_tree	*add_leaf(t_file *new_data)
 	return (new_branch);
 }
 
-static void		sort_tree(t_tree *tmp, t_file *new_data, char flags)
+void			sort_tree(t_tree *tmp, t_file *new_data, char flags)
 {
 	int cmp;
 
@@ -72,9 +72,12 @@ void			fild_tree(t_tree *tree, DIR *dir_files, char flags, char *path)
 
 	if ((dent = readdir(dir_files)) != NULL)
 		tree->data = create_data_file(ft_strjoin(path, dent->d_name));
+	tree->tt_blocks = tree->data->block_alloc;
 	while ((dent = readdir(dir_files)) != NULL)
 	{
 		new_data = create_data_file(ft_strjoin(path, dent->d_name));
+		tree->tt_blocks += new_data->block_alloc;
+		tree->weight++;
 		sort_tree(tree, new_data, flags);
 	}
 }

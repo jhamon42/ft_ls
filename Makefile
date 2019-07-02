@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/06/27 16:22:35 by jhamon           ###   ########.fr        #
+#    Updated: 2019/07/02 13:04:44 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ AUTEUR = "jhamon"
 
 CC = gcc
 
-# FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra
 
 #path
 INC = -I ./includes/
@@ -25,7 +25,8 @@ OBJ_PATH  = obj/
 
 #srcs
 SRC_PS = ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
-		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c ft_just_one.c
+		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c ft_just_one.c\
+		ft_more_parms.c
 
 MAIN = main.c
 

@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:44:08 by jhamon            #+#    #+#             */
-/*   Updated: 2019/06/30 16:20:09 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/01 16:58:26 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,4 @@ void	print_arb(t_tree *tree, char flags)
 		if (tree->right != NULL)
 			print_arb(tree->right, flags);
 	}
-}
-
-void	multi_print(char **files, char flags)
-{
-	return;
-}
-
-void is_dir(t_file *data, char flags)
-{
-
 }

@@ -6,25 +6,28 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/02 13:02:10 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/06 14:06:55 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-static	t_tree	*add_leaf(t_file *new_data)
+static	t_tree	*add_leaf(t_file *new_data, t_freemoi *eldoctor)
 {
 	t_tree *new_branch;
 
-	if (!(new_branch = malloc(sizeof(t_tree))))
-		exit_custum("malloc", EXIT_ERROR);
-	ft_bzero(new_branch, sizeof(t_tree));
+	if (!(new_branch = ft_memalloc(sizeof(t_tree))))
+		free_consultation(eldoctor); //
 	new_data->place = 1;
 	new_branch->data = new_data;
 	return (new_branch);
 }
 
-void			sort_tree(t_tree *tmp, t_file *new_data, char flags)
+void			sort_tree(
+t_tree *tmp,
+t_file *new_data,
+char flags,
+t_freemoi *eldoctor)
 {
 	int cmp;
 
@@ -36,20 +39,25 @@ void			sort_tree(t_tree *tmp, t_file *new_data, char flags)
 	if (cmp > 0)
 	{
 		if (tmp->right != NULL)
-			sort_tree(tmp->right, new_data, flags);
+			sort_tree(tmp->right, new_data, flags, eldoctor);
 		else
-			tmp->right = add_leaf(new_data);
+			tmp->right = add_leaf(new_data, eldoctor);
 	}
 	else
 	{
 		if (tmp->left != NULL)
-			sort_tree(tmp->left, new_data, flags);
+			sort_tree(tmp->left, new_data, flags, eldoctor);
 		else
-			tmp->left = add_leaf(new_data);
+			tmp->left = add_leaf(new_data, eldoctor);
 	}
 }
 
-void			fild_multi_tree(t_tree *tree, char **dir_files, char flags)
+void			fild_multi_tree(
+t_tree *tree,
+char **dir_files,
+char flags,
+t_freemoi *eldoctor
+)
 {
 	int			i;
 	t_tree		*tmp;
@@ -60,24 +68,25 @@ void			fild_multi_tree(t_tree *tree, char **dir_files, char flags)
 	{
 		tmp = tree;
 		new_data = create_data_file(dir_files[i]);
-		sort_tree(tmp, new_data, flags);
+		sort_tree(tmp, new_data, flags, eldoctor);
 		i++;
 	}
 }
 
-void			fild_tree(t_tree *tree, DIR *dir_files, char flags, char *path)
+void			fild_tree(DIR *dir_files, char *path, t_apaletemps *plt)
 {
 	struct dirent	*dent;
 	t_file			*new_data;
 
 	if ((dent = readdir(dir_files)) != NULL)
-		tree->data = create_data_file(ft_strjoin(path, dent->d_name));
-	tree->tt_blocks = tree->data->block_alloc;
+		plt->tree->data = create_data_file(ft_strjoin(path, dent->d_name));
+	plt->tree->tt_blocks = plt->tree->data->block_alloc;
 	while ((dent = readdir(dir_files)) != NULL)
 	{
 		new_data = create_data_file(ft_strjoin(path, dent->d_name));
-		tree->tt_blocks += new_data->block_alloc;
-		tree->weight++;
-		sort_tree(tree, new_data, flags);
+		plt->tree->tt_blocks += new_data->block_alloc;
+		plt->tree->weight++;
+		sort_tree(plt->tree, new_data, plt->flags, plt->eldoctor);
 	}
+	// ft_strdel(&path);
 }

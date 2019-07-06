@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/07/02 13:04:44 by jhamon           ###   ########.fr        #
+#    Updated: 2019/07/06 13:00:28 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ AUTEUR = "jhamon"
 
 CC = gcc
 
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -g3
 
 #path
 INC = -I ./includes/
@@ -26,17 +26,12 @@ OBJ_PATH  = obj/
 #srcs
 SRC_PS = ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
 		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c ft_just_one.c\
-		ft_more_parms.c
+		ft_more_parms.c ft_free.c
 
 MAIN = main.c
 
-TEST = main_test.c
-
 SRC_MAIN = $(addprefix $(SRC_PATH), $(SRC_PS) $(MAIN))
 OBJ_MAIN = $(addprefix $(OBJ_PATH), $(SRC_PS:.c=.o) $(MAIN:.c=.o))
-
-SRC_TEST = $(addprefix $(SRC_PATH), $(SRC_PS) $(TEST))
-OBJ_TEST = $(addprefix $(OBJ_PATH), $(SRC_PS:.c=.o) $(TEST:.c=.o))
 
 LIB = -L libft/ -lft
 
@@ -118,11 +113,6 @@ else
 endif
 	$(call OK,$*)
 
-test : $(OBJ_TEST)
-	@make -C libft
-	@$(CC) -o $(NAME) $(SRC_TEST) $(INC) $(LIB) $(FLAG)
-	$(call FOK,$@)
-
 clean :
 	@make -C libft clean
 	@rm -rf $(OBJ_PATH)
@@ -140,6 +130,7 @@ debug :
 	@make -C libft DB=1
 
 auteur :
+	@chmod 644 $@
 	@touch $@ && echo $(AUTEUR) > $@
 	$(call BULSHIT,$(AUTEUR))
 

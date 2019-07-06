@@ -6,41 +6,51 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 13:35:48 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/02 17:02:27 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/06 14:57:49 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	simple_print(char *files, char flags)
+static	void	is_dir(t_apaletemps	*plt)
 {
-	DIR		*dir;
-	t_tree	*tree;
-	t_file	*data;
+	DIR			*dir;
+	t_tree		*tree;
 
+	if ((tree = ft_memalloc(sizeof(t_tree))) == NULL)
+		exit_custum("malloc", -1);
+	plt->eldoctor = add_patient(plt->eldoctor, (void*)&tree, 2);
+	dir = opendir(plt->data->path);
+	plt->tree = tree;
+	if (dir != NULL)
+	{
+		fild_tree(dir, plt->data->path, plt);
+		closedir(dir);
+		L & plt->flags && (tree->weight > 1)
+			? ft_printf("total %lld\n", tree->tt_blocks) : 0;
+		print_arb(tree, plt->flags);
+	}
+	if (plt->flags & GR)
+		recursive_while(plt->flags, tree, plt->eldoctor);
+	// free_tree(tree);
+}
+
+void			simple_print(char *files, char flags, t_freemoi *eldoctor)
+{
+	t_file			*data;
+	t_apaletemps	plt;
+
+	plt.eldoctor = eldoctor;
 	data = create_data_file(files);
-	if (data->perm_type[0] != 'd')
+	plt.data = data;
+	plt.flags = flags;
+	if (data && data->perm_type[0] != 'd')
 	{
 		flags & L ? print_l_mode(data)
 			: ft_printf("%s\n", data->name);
-		ft_bzero(data, sizeof(t_file));
-		ft_memdel((void*)&data);
+		// ft_bzero(data, sizeof(t_file));
+		// ft_memdel((void*)&data);
 	}
-	else
-	{
-		if ((tree = ft_memalloc(sizeof(t_tree))) == NULL)
-			exit_custum("malloc", -1);
-		dir = opendir(data->path);
-		if (dir != NULL)
-		{
-			fild_tree(tree, dir, flags, data->path);
-			closedir(dir);
-			L & flags && (tree->weight > 1)
-				? ft_printf("total %lld\n", tree->tt_blocks) : 0;
-			print_arb(tree, flags);
-		}
-		if (flags & GR)
-			recursive_while(flags, tree);
-		free_tree(tree);
-	}
+	else if (data)
+		is_dir(&plt);
 }

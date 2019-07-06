@@ -6,36 +6,52 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:54:45 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/02 16:52:13 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/06 14:03:39 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	free_tree(t_tree *tree)
+void		free_consultation(t_freemoi *eldoctor)
 {
-	if (tree->left == NULL)
-	{
-		if (tree->right != NULL)
-			free_tree(tree->right);
+	t_freemoi	*curse;
 
-
-	}
-	else
+	while (eldoctor)
 	{
-		free_tree(tree->left);
-		if (tree->right != NULL)
-			free_tree(tree->right);
+		if ((void*)&eldoctor->patient)
+		{
+			eldoctor->pathology == 3 && ((t_file*)eldoctor->patient)->name ? free_data((t_file*)&eldoctor->patient) : 0;
+			eldoctor->pathology == 2 && ((t_tree*)eldoctor->patient)->data ? free_tree((t_tree*)&eldoctor->patient) : 0;
+			eldoctor->pathology == 1 && (char**)eldoctor->patient ? free_parms((char**)&eldoctor->patient) : 0;
+		}
+		curse = eldoctor;
+		eldoctor = eldoctor->next;
+		ft_bzero(curse, sizeof(t_freemoi));
+		ft_memdel((void*)&curse);
 	}
-	ft_bzero(tree->data, sizeof(t_file));
-	ft_memdel((void*)&tree->data);
-	ft_bzero(tree, sizeof(t_tree));
-	ft_memdel((void*)&tree);
 }
 
-void	exit_custum(char *error, int type)
+/*
+**	Pathology :
+**
+**	1 : parms
+**	2 : tree
+**	3 : data
+*/
+t_freemoi	*add_patient(t_freemoi *eldoctor, void **patient, int patho)
+{
+	t_freemoi	*next;
+
+	eldoctor->pathology = patho;
+	eldoctor->patient = *patient;
+	if (!(next = ft_memalloc(sizeof(t_freemoi))))
+		free_consultation(eldoctor);
+	next->next = eldoctor;
+	return (next);
+}
+
+void		exit_custum(char *error, int type)
 {
 	perror(error);
-	// oblie pas de tous free
 	exit(type);
 }

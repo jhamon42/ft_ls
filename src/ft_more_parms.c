@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 16:35:15 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/06 19:59:17 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/15 22:57:17 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@ void	in_dos(t_tree *tree, char flags, t_freemoi *eldoctor)
 
 	dir = NULL;
 	if ((tree_tmp = ft_memalloc(sizeof(t_tree))) == NULL)
-		exit_custum("malloc", -1); //
+		exit_custum("malloc", -1);
 	eldoctor = add_patient(eldoctor, (void*)&tree_tmp, 2);
-	if ((data = create_data_file(tree->data->name)) != NULL)
+	if ((data = create_data_file(tree->data->name, eldoctor)) != NULL)
 		dir = opendir(data->path);
-	plt.eldoctor = eldoctor;
 	plt.flags = flags;
 	plt.tree = tree_tmp;
 	if (dir != NULL)
 	{
-		fild_tree(dir, data->path, &plt);
+		fild_tree(dir, data->path, &plt, eldoctor);
 		closedir(dir);
 		L & flags && (tree_tmp->weight > 1)
 			? ft_printf("total %lld\n", tree_tmp->tt_blocks) : 0;
@@ -38,7 +37,7 @@ void	in_dos(t_tree *tree, char flags, t_freemoi *eldoctor)
 	}
 	if (flags & GR)
 		recursive_while(flags, tree_tmp, eldoctor);
-	// free_tree(tree_tmp);
+	eldoctor = free_patient(eldoctor);
 }
 
 void	print_dos(t_tree *tree, char flags, t_freemoi *eldoctor)
@@ -102,7 +101,7 @@ void	multi_print(char **files, char flags, t_freemoi *eldoctor)
 	eldoctor = add_patient(eldoctor, (void*)&tree_dos, 2);
 	while (files[i])
 	{
-		if ((data = create_data_file(files[i++])) != NULL)
+		if ((data = create_data_file(files[i++], eldoctor)) != NULL)
 		{
 			if (data->perm_type[0] != 'd')
 				marabou(tree, data, flags, eldoctor);

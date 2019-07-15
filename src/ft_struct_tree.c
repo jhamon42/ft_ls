@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/06 14:06:55 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/15 22:27:00 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static	t_tree	*add_leaf(t_file *new_data, t_freemoi *eldoctor)
 	t_tree *new_branch;
 
 	if (!(new_branch = ft_memalloc(sizeof(t_tree))))
-		free_consultation(eldoctor); //
-	new_data->place = 1;
+		free_consultation(eldoctor);
 	new_branch->data = new_data;
 	return (new_branch);
 }
@@ -67,26 +66,29 @@ t_freemoi *eldoctor
 	while (dir_files[i])
 	{
 		tmp = tree;
-		new_data = create_data_file(dir_files[i]);
+		new_data = create_data_file(dir_files[i], eldoctor);
 		sort_tree(tmp, new_data, flags, eldoctor);
 		i++;
 	}
 }
 
-void			fild_tree(DIR *dir_files, char *path, t_apaletemps *plt)
+void			fild_tree(
+	DIR *dir_files,
+	char *path,
+	t_apaletemps *plt,
+	t_freemoi *eldoctor)
 {
 	struct dirent	*dent;
 	t_file			*new_data;
 
 	if ((dent = readdir(dir_files)) != NULL)
-		plt->tree->data = create_data_file(ft_strjoin(path, dent->d_name));
+		plt->tree->data = create_data_file(ft_strjoin(path, dent->d_name), eldoctor);
 	plt->tree->tt_blocks = plt->tree->data->block_alloc;
 	while ((dent = readdir(dir_files)) != NULL)
 	{
-		new_data = create_data_file(ft_strjoin(path, dent->d_name));
+		new_data = create_data_file(ft_strjoin(path, dent->d_name), eldoctor);
 		plt->tree->tt_blocks += new_data->block_alloc;
 		plt->tree->weight++;
-		sort_tree(plt->tree, new_data, plt->flags, plt->eldoctor);
+		sort_tree(plt->tree, new_data, plt->flags, eldoctor);
 	}
-	// ft_strdel(&path);
 }

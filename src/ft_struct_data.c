@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:57:27 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/15 22:16:02 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/17 18:38:57 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,40 @@ void			prem_type_field(mode_t st_mode, t_file *data)
 	data->perm_type[10] = '\0';
 }
 
-static void		cp_data(struct stat *sb, t_file *data, char* dir_file)
+static void		thetime(struct stat *sb, t_file *data)
 {
 	char			*tmp;
 
-	tmp = user_from_uid(sb->st_uid, 0);
-	data->user_name = ft_strdup(tmp);
-	data->group_name = group_from_gid(sb->st_gid, 0);
+	tmp = ctime(&sb->st_mtime);
+	if ((sb->st_mtime - (time(NULL) - 13046400)) < 0)
+	{
+		ft_strncpy(data->last_modif, tmp + 4, 7);
+		ft_strncpy(data->last_modif + 7, tmp + 20, 4);
+	}
+	else
+	{
+		ft_strncpy(data->last_modif, tmp + 4, 12);
+	}
+	data->time = sb->st_mtime;
+}
+
+static void		cp_data(struct stat *sb, t_file *data, char *dir_file)
+{
+	data->user_name = ft_strdup(user_from_uid(sb->st_uid, 0));
+	data->group_name = ft_strdup(group_from_gid(sb->st_gid, 0));
 	data->link_number = sb->st_nlink;
 	data->file_size = sb->st_size;
-	tmp = ctime(&sb->st_mtime);
-	ft_strncpy(data->last_modif, tmp + 4, 12);
-	data->time = sb->st_mtime;
+	thetime(sb, data);
 	prem_type_field(sb->st_mode, data);
 	data->major = major(sb->st_rdev);
 	data->minor = minor(sb->st_rdev);
 	data->block_alloc = sb->st_blocks;
-	data->name = ft_strrchr(dir_file, '/');
+	data->dir_file = ft_strdup(dir_file);
+	data->name = ft_strrchr(data->dir_file, '/');
 	data->name = data->name && data->name[1] != '\0'
-		? data->name + 1 : ft_strdup(dir_file);
-	data->path = dir_file[ft_strlen(dir_file) - 1] == '/'
-		? ft_strdup(dir_file) : ft_strjoin(dir_file, "/");
+		? data->name + 1 : data->dir_file;
+	data->path = data->dir_file[ft_strlen(data->dir_file) - 1] == '/'
+		? ft_strdup(data->dir_file) : ft_strjoin(data->dir_file, "/");
 }
 
 t_file			*create_data_file(char *dir_file, t_freemoi *eldoctor)
@@ -72,10 +85,10 @@ t_file			*create_data_file(char *dir_file, t_freemoi *eldoctor)
 
 	i = 0;
 	if (!(data = ft_memalloc(sizeof(t_file))))
-		free_consultation(eldoctor);
+		exit_custum("malloc", EXIT_ERROR, eldoctor);
 	if (lstat(dir_file, &sb) == -1)
 	{
-		ft_printf("./ft_ls: ");
+		write(2, "./ft_ls: ", 10);
 		perror(dir_file);
 		ft_memdel((void*)&data);
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 15:43:25 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/15 22:27:00 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/16 19:40:55 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	t_tree	*add_leaf(t_file *new_data, t_freemoi *eldoctor)
 	t_tree *new_branch;
 
 	if (!(new_branch = ft_memalloc(sizeof(t_tree))))
-		free_consultation(eldoctor);
+		exit_custum("malloc", EXIT_ERROR, eldoctor);
 	new_branch->data = new_data;
 	return (new_branch);
 }
@@ -80,13 +80,20 @@ void			fild_tree(
 {
 	struct dirent	*dent;
 	t_file			*new_data;
+	char			*tmp;
 
 	if ((dent = readdir(dir_files)) != NULL)
-		plt->tree->data = create_data_file(ft_strjoin(path, dent->d_name), eldoctor);
+	{
+		tmp = ft_strjoin(path, dent->d_name);
+		plt->tree->data = create_data_file(tmp, eldoctor);
+		ft_strdel(&tmp);
+	}
 	plt->tree->tt_blocks = plt->tree->data->block_alloc;
 	while ((dent = readdir(dir_files)) != NULL)
 	{
-		new_data = create_data_file(ft_strjoin(path, dent->d_name), eldoctor);
+		tmp = ft_strjoin(path, dent->d_name);
+		new_data = create_data_file(tmp, eldoctor);
+		ft_strdel(&tmp);
 		plt->tree->tt_blocks += new_data->block_alloc;
 		plt->tree->weight++;
 		sort_tree(plt->tree, new_data, plt->flags, eldoctor);

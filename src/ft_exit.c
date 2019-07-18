@@ -6,7 +6,7 @@
 /*   By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 14:54:45 by jhamon            #+#    #+#             */
-/*   Updated: 2019/07/15 22:44:19 by jhamon           ###   ########.fr       */
+/*   Updated: 2019/07/16 19:30:54 by jhamon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,22 @@ void		free_consultation(t_freemoi *eldoctor)
 	}
 }
 
-/*
-**	Pathology :
-**
-**	1 : parms
-**	2 : tree
-**	3 : data
-*/
-t_freemoi	*add_patient(t_freemoi *eldoctor, void **patient, int patho)
+void		add_patient(t_freemoi **eldoctor, void **patient, int patho)
 {
 	t_freemoi	*next;
 
 	if (!(next = ft_memalloc(sizeof(t_freemoi))))
-		free_consultation(eldoctor);
+		free_consultation(*eldoctor);
 	next->pathology = patho;
 	next->patient = *patient;
-	next->next = eldoctor;
-	eldoctor = next;
-	return (eldoctor);
+	next->next = *eldoctor;
+	*eldoctor = next;
 }
 
-void		exit_custum(char *error, int type)
+void		exit_custum(char *error, int type, t_freemoi *eldoctor)
 {
+	free_consultation(eldoctor);
+	write(2, "./ft_ls: ", 10);
 	perror(error);
 	exit(type);
 }

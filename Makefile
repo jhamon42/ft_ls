@@ -6,7 +6,7 @@
 #    By: jhamon <jhamon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/13 17:05:30 by jhamon            #+#    #+#              #
-#    Updated: 2019/07/06 13:00:28 by jhamon           ###   ########.fr        #
+#    Updated: 2019/07/18 11:57:01 by jhamon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJ_PATH  = obj/
 #srcs
 SRC_PS = ft_parse_flags.c ft_recursive_while.c ft_struct_tree.c ft_exit.c\
 		ft_struct_data.c ft_struct_state_ls.c ft_print_mode.c ft_just_one.c\
-		ft_more_parms.c ft_free.c
+		ft_more_parms.c ft_free.c ft_in_dos.c
 
 MAIN = main.c
 
